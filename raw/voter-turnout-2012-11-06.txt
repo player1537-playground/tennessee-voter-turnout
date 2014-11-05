@@ -1,4 +1,4 @@
-County Register_Voters Total_Votes_Cast Voter_Turnout Absentee_By_Mail_Voters Early_Voters Percentage_Of_Early_Voters Percentage_of_Early_And_Absentee_Voters
+County RegisteredVoters Total_Votes_Cast Voter_Turnout Absentee_By_Mail_Voters Early_Voters Percentage_Of_Early_Voters Percentage_of_Early_And_Absentee_Voters
 Anderson 49,169 30,046 61.11% 1,038 17423 57.99% 61.44%
 Bedford 24,291 14,534 59.83% 273 7614 52.39% 54.27%
 Benton 12,206 6,335 51.90% 182 3825 60.38% 63.25%
