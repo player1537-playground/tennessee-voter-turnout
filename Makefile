@@ -20,5 +20,6 @@ gen/voter-%.csv: raw/voter-%.txt Makefile
 	@mkdir -p $(dir $@)
 	<$< tr "[a-z]" "[A-Z]" | \
 		tr -d ',' | \
+		sed -e ':a; 1 ! { /^[^0-9 ,]* [^0-9 ,]/ { s/^\([^0-9 ,]*\) /\1_/; ta; }; }' | \
 		sed -e 's/\(..\)\.\(..\)%/0.\1\2/g' | \
 		tr ' ' ',' > $@
