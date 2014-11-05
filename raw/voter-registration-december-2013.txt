@@ -1,3 +1,4 @@
+County Ending_Active Ending_Inactive New_Registration New_Inactive Purge_Active Purge_Inactive
 ANDERSON 37,802 10,720 871 5,318 412 205
 BEDFORD 18,345 5,437 359 0 191 90
 BENTON 8,235 3,331 179 185 90 72
