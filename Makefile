@@ -4,10 +4,9 @@ noop :=
 space := $(noop) $(noop)
 comma := $(noop),$(noop)
 
-TURNOUT_DATES := august-2-2012 august-5-2010 august-7-2014 march-6-2012 \
-	november-2-2010 november-6-2012
-REGISTRATION_DATES := june-2014 june-2013 june-2012 december-2013 december-2012 \
-	december-2011
+TURNOUT_DATES := 2010-08-05 2010-11-02 2012-03-06 2012-08-02 \
+	 2012-11-06 2014-08-07
+REGISTRATION_DATES := 2011-12 2012-06 2012-12 2013-06 2013-12 2014-06
 GEN_CSV_TURNOUT_FILES := \
 	$(patsubst %,gen/csv/voter-turnout-%.csv,$(TURNOUT_DATES))
 GEN_CSV_REGISTRATION_FILES := \
