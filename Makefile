@@ -18,7 +18,14 @@ GEN_TURNOUT_CSV := gen/voter-turnout.csv
 GEN_REGISTRATION_CSV := gen/voter-registration.csv
 GEN_LARGE_CSV := $(GEN_TURNOUT_CSV) $(GEN_REGISTRATION_CSV)
 
-GEN_FILES := $(GEN_CSV_FILES) $(GEN_LARGE_CSV)
+INTERESTING_COUNTIES := KNOX HARDIN CAMPBELL MADISON LOUDON CUMBERLAN
+GEN_COUNTY_TURNOUT := \
+	$(patsubst %,gen/county/turnout-%.csv,$(INTERESTING_COUNTIES))
+GEN_COUNTY_REGISTRATION := \
+	$(patsubst %,gen/county/registration-%.csv,$(INTERESTING_COUNTIES))
+GEN_COUNTY := $(GEN_COUNTY_REGISTRATION) $(GEN_COUNTY_TURNOUT)
+
+GEN_FILES := $(GEN_CSV_FILES) $(GEN_LARGE_CSV) $(GEN_COUNTY)
 
 all: $(GEN_FILES)
 
@@ -48,5 +55,9 @@ gen/voter-registration.csv: $(GEN_CSV_REGISTRATION_FILES)
 		csvsort -c DATE > $@
 
 gen/county/turnout-%.csv: gen/voter-turnout.csv
+	@mkdir -p $(dir $@)
+	csvgrep -c COUNTY -m $* $< > $@
+
+gen/county/registration-%.csv: gen/voter-registration.csv
 	@mkdir -p $(dir $@)
 	csvgrep -c COUNTY -m $* $< > $@
