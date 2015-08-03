@@ -46,7 +46,7 @@ function Graph() {
     var height = 400;
     var xScale = d3.time.scale();
     var yScale = d3.scale.linear();
-    var timeFormat = d3.time.format("%Y-%m-%d");
+    var dateFormat = d3.time.format("%Y-%m-%d");
 
     function my(selection) {
 	selection.each(function(data) {
@@ -55,13 +55,21 @@ function Graph() {
 	    xProperty = xProperty || columns[0];
 	    yProperty = yProperty || columns[1];
 
-	    console.log(d3.extent(data.map(function(d) { return d[xProperty]; })));
+	    function x(d) { return dateFormat.parse(d[xProperty]); }
+	    function y(d) { return +d[yProperty]; }
+
+	    console.log("x extent: ", d3.extent(data.map(x)));
+	    console.log("y extent: ", d3.extent(data.map(y)));
 	    xScale
-		.domain(d3.extent(data.map(function(d) { return d[xProperty]; })))
+		.domain(d3.extent(data.map(x)))
 		.range([0, width]);
 	    yScale
-		.domain(d3.extent(data.map(function(d) { return d[yProperty]; })))
+		.domain(d3.extent(data.map(y)))
 		.range([height, 0]);
+
+	    console.log("x scale domain and range: ", xScale.domain(), xScale.range());
+
+        //console.log(data.map(function(d) { return [x(d), y(d)]; }));
 
 	    var page = d3.select(this);
 
@@ -76,8 +84,8 @@ function Graph() {
 		    .attr("fill", "black")
 		    .attr("r", 5);
 		circles
-		    .attr("cx", function(d) { return xScale(d[xProperty]); })
-		    .attr("cy", function(d) { return yScale(d[yProperty]); })
+		    .attr("cx", function(d) { return xScale(x(d)); })
+		    .attr("cy", function(d) { return yScale(y(d)); });
 	    }
 
 	    redraw();

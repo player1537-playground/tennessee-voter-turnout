@@ -32,6 +32,8 @@ JS_QUEUE := js/queue.v1.min.js
 JS_COLORBREWER := js/colorbrewer.v1.min.js
 JS := $(JS_D3) $(JS_QUEUE) $(JS_COLORBREWER)
 
+ZIP_CODE_CSV := raw/zipcode.csv
+
 all: $(GEN_FILES)
 
 .PHONY: clean
@@ -42,6 +44,9 @@ clean:
 voter-data.zip: $(GEN_FILES)
 	rm -f $@
 	zip $@ $^
+
+$(ZIP_CODE_CSV):
+	wget http://www.unitedstateszipcodes.org/zip_code_database.csv -O $@
 
 gen/csv/voter-%.csv: raw/voter-%.txt Makefile
 	@mkdir -p $(dir $@)
@@ -79,6 +84,9 @@ $(JS_COLORBREWER):
 	@mkdir -p $(dir $@)
 	wget http://d3js.org/colorbrewer.v1.min.js -O $@
 
+voter-turnout.txt: $(GEN_LARGE_CSV)
+	cp $< $@
+
 .PHONY: run-server
-run-server: $(GEN_LARGE_CSV) $(JS)
+run-server: $(JS) voter-turnout.txt
 	python -m SimpleHTTPServer 8888
